@@ -19,7 +19,7 @@ load_dotenv()
 addr = os.getenv("ADDRESS")
 
 
-# Read the Excel data from a file
+# Request data from Hyperliquid servers
 def fetch_hyperliquid_funding():
     url = "https://api-ui.hyperliquid.xyz/info"
     request_data = {
@@ -31,6 +31,7 @@ def fetch_hyperliquid_funding():
     return requests.post(url, headers=headers, json=request_data)
 
 
+# Grab only the key values we need
 def populate_funding_data(hl_funding_response, keys, assets=[]):
     data = {}
 
