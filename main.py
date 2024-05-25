@@ -1,6 +1,6 @@
-# Data conversion
-import json
+# Data fetch and conversion
 import requests
+import json
 
 # Unix timestamp converts
 from datetime import datetime
@@ -12,7 +12,6 @@ from dotenv import load_dotenv
 # Plotting
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import pandas as pd
 
 # Environment
 load_dotenv()
@@ -28,14 +27,14 @@ def fetch_hyperliquid_funding():
         "startTime": 0,
     }
     headers = {"Content-Type": "application/json"}
-    return requests.post(url, headers=headers, json=request_data)
+    return json.loads(requests.post(url, headers=headers, json=request_data).text)
 
 
 # Grab only the key values we need
 def populate_funding_data(hl_funding_response, keys, assets=[]):
     data = {}
 
-    for item in json.loads(hl_funding_response.text):
+    for item in hl_funding_response:
 
         asset = item["delta"]["coin"]
 
